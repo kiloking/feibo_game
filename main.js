@@ -120,16 +120,23 @@ window.boot = function() {
     }
 
     var onStart = function() {
-
+        
         cc.loader.downloader._subpackages = settings.subpackages;
 
         cc.view.enableRetina(true);
         cc.view.resizeWithBrowserSize(true);
+        let frameSize = cc.view.getFrameSize()
 
         if (!false && !false) {
 
             if (cc.sys.isBrowser) {
                 setLoadingDisplay();
+                if (frameSize.width > frameSize.height){
+                    cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
+                    cc.view.setFrameSize(frameSize.height/2, frameSize.width)
+                }
+ 
+                
             }
 
             if (cc.sys.isMobile) {
@@ -181,8 +188,14 @@ window.boot = function() {
 
         var canvas;
 
+
         if (cc.sys.isBrowser) {
             canvas = document.getElementById('GameCanvas');
+            console.log('isBrowser')
+            if (frameSize.width > frameSize.height){
+                canvas.positionX = 120
+            }
+           
         }
         var launchScene = settings.launchScene;
         console.log("landscape,", launchScene);
